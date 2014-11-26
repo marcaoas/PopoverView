@@ -487,6 +487,8 @@
       // Make the view small and transparent before animation
       self.alpha = 0.f;
       self.transform = CGAffineTransformMakeScale(0.1f, 0.1f);
+      self.contentView.alpha = 0.f;
+      self.contentView.transform = CGAffineTransformMakeScale(0.1f, 0.1f);
 
       // animate into full size
       // First stage animates to 1.05x normal size, then second stage animates back down to 1x size.
@@ -494,9 +496,12 @@
       [UIView animateWithDuration:0.2f delay:0.f options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.alpha = 1.f;
         self.transform = CGAffineTransformMakeScale(1.05f, 1.05f);
+        self.contentView.alpha = 1.f;
+        self.contentView.transform = CGAffineTransformMakeScale(1.05f, 1.05f);
       } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.08f delay:0.f options:UIViewAnimationOptionCurveEaseInOut animations:^{
           self.transform = CGAffineTransformIdentity;
+          self.contentView.transform = CGAffineTransformIdentity;
         } completion:nil];
       }];
     }
@@ -590,9 +595,6 @@
 
       [topView addSubview:self];
       [topView addSubview:contentView];
-      NSLog(@"SELF FRAME: %@", NSStringFromCGRect(self.frame));
-      NSLog(@"TOPVIEw FRAME: %@", NSStringFromCGRect(topView.frame));
-      NSLog(@"CONTENTVIEW FRAME: %@", NSStringFromCGRect(contentView.frame));
 
       //Add a tap gesture recognizer to the large invisible view (self), which will detect taps anywhere on the screen.
       UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
